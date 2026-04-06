@@ -5,7 +5,7 @@ require_once "app/Boot.php";
 
         public static function init(){
             
-            echo "111";
+            // echo "111";
             Boot::init();
             
         }

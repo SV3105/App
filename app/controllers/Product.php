@@ -1,27 +1,53 @@
-<?php 
+<?php
 require_once 'app/Models/Product.php';
-require_once 'app/controllers/Core/Front.php';
+require_once 'app/controllers/Core/Base.php';
 
-class Controller_Product extends Controller_Core_Front {
-    public function indexAction(){
-        echo __CLASS__ . '::' . __FUNCTION__ ;
+class Controller_Product extends Controller_Core_Base
+{
+
+    public function listAction()
+    {
+        $productModel = new Model_Product();
+        $sql = "SELECT * FROM product";
+        $products = $productModel->fetchAll($sql);
+          $this->renderTemplate('products/list.phtml', [
+            'products' => $products
+        ]);
     }
 
-    public function listAction(){
-        echo __CLASS__ . '::' . __FUNCTION__ ;
+    public function saveAction()
+    {
+        $productModel = new Model_Product();
+        if ($id = $this->getRequest()->get('id')) {
+            $productModel->load($id);
+        }
+        $data = $this->getRequest()->post('product');
+        foreach ($data as $key => $value) {
+            $productModel->$key = $value;
+        }
+        $productModel->save();
+        $this->redirect('list', 'product');
     }
 
-    public function addAction(){
-       echo __CLASS__ . '::' . __FUNCTION__ ;
-        
+    public function editAction()
+    {
+        $productModel = new Model_Product();
+        if ($id = $this->getRequest()->get('id')) {
+            $productModel->load($id);
+        }
+         $this->renderTemplate('products/edit.phtml', [
+            'products' => $productModel
+        ]);
     }
 
-     public function editAction(){
-        echo __CLASS__ . '::' . __FUNCTION__ ;
-    }
-
-     public function deleteAction(){
-        echo __CLASS__ . '::' . __FUNCTION__ ;
+    public function deleteAction()
+    {
+        $productModel = new Model_Product();
+        if ($id = $this->getRequest()->get('id')) {
+            $productModel->load($id);
+            $productModel->delete();
+        }
+        $this->redirect('list', 'product');
     }
 }
 

@@ -72,48 +72,45 @@ require_once 'Database.php';
     }
  
     public function update()
-    {
-        if (!isset($this->data[$this->primaryKey])) {
-            return false;
-        }
- 
-        $id = $this->data[$this->primaryKey];
-        $data = $this->data;
- 
-        unset($data[$this->primaryKey]);
- 
-        $set = [];
-        foreach ($data as $key => $value) {
-            $set[] = "$key='$value'";
-        }
- 
-        $set = implode(",", $set);
-        $query = "update {$this->tableName} set $set where {$this->primaryKey} = $id";
-       
-        if ($this->db->update($query)) {
-            return $this;
-        }
+{
+    if (empty($this->data[$this->primaryKey])) {
         return false;
     }
+    $id = $this->data[$this->primaryKey];
+    $data = $this->data;
+    unset($data[$this->primaryKey]);
+    if (empty($data)) {
+        return $this; 
+    }
+    $set = [];
+    foreach ($data as $key => $value) {
+        $set[] = "$key='$value'";
+    }
+    $setList = implode(",", $set);
+    $query = "update {$this->tableName} set $setList where {$this->primaryKey} = '$id'";
+   
+    return $this->db->update($query) ? $this : false;
+}
  
     public function save()
-    {
-        if (!isset($this->data[$this->primaryKey])) {
-            return $this->insert();
-        }
-        return $this->update();
+{
+    if (empty($this->data[$this->primaryKey])) {
+        return $this->insert();
     }
+    return $this->update();
+}
  
     public function delete()
-    {
-        if (!isset($this->data[$this->primaryKey])) {
-            return false;
-        }
- 
-        $id = $this->data[$this->primaryKey];
-        $query = "delete from {$this->tableName} where {$this->primaryKey} = $id";
-        return $this->db->delete($query);
+{
+    if (empty($this->data[$this->primaryKey])) {
+        return false;
     }
+
+    $id = $this->data[$this->primaryKey];
+    $query = "delete from {$this->tableName} where {$this->primaryKey} = '$id'";
+    return $this->db->delete($query);
+}
+
  
 
         public function __set($key, $value){

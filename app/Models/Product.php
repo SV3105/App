@@ -1,8 +1,8 @@
 <?php 
 require_once 'app/Models/Core/Row.php';
 class Model_Product extends Model_Core_Row {
-    public function __construct($db){
-        parent::__construct($db);
+    public function __construct(){
+        parent::__construct();
         $this->tableName = "product";
         $this->primaryKey = "product_id";
     }

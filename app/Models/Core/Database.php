@@ -9,7 +9,7 @@ class Model_Core_Database {
 
     public function connect(){
         if($this->conn === null){
-            $this->conn = mysqli_connect($this->server,$this->username,$this->password,$this->dbname);
+            $this->conn = mysqli_connect($this->server,$this->username,$this->password,$this->dbname, $this->port);
  
             if(!$this->conn){
                 die("Connection failed" . mysqli_connect_error());
