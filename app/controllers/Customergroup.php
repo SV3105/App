@@ -22,10 +22,12 @@ class Controller_Customergroup extends Controller_Core_Base
             $customerGroupModel->load($id);
         }
         $data = $this->getRequest()->post('customer_group');
-        foreach ($data as $key => $value) {
-            $customerGroupModel->$key = $value;
+        if ($data) {
+            foreach ($data as $key => $value) {
+                $customerGroupModel->$key = $value;
+            }
+            $customerGroupModel->save();
         }
-        $customerGroupModel->save();
         $this->redirect('list', 'customer_group');
     }
 
@@ -36,7 +38,7 @@ class Controller_Customergroup extends Controller_Core_Base
             $customerGroupModel->load($id);
         }
          $this->renderTemplate('customer_groups/edit.phtml', [
-            'customerGroups' => $customerGroupModel
+            'customerGroup' => $customerGroupModel
         ]);
     }
 

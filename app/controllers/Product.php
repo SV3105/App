@@ -2,6 +2,7 @@
 require_once 'app/Models/Product.php';
 require_once 'app/controllers/Core/Base.php';
 
+
 class Controller_Product extends Controller_Core_Base
 {
 
@@ -10,7 +11,11 @@ class Controller_Product extends Controller_Core_Base
         $productModel = new Model_Product();
         $sql = "SELECT * FROM product";
         $products = $productModel->fetchAll($sql);
-          $this->renderTemplate('products/list.phtml', [
+        // $block = Mage::getBlock('product/list');
+        // $layout = $this->getLayout();
+        // $layout->addChild('product/list', $block);
+        // $layout->toHtml();
+        $this->renderTemplate('products/list.phtml', [
             'products' => $products
         ]);
     }
@@ -22,10 +27,12 @@ class Controller_Product extends Controller_Core_Base
             $productModel->load($id);
         }
         $data = $this->getRequest()->post('product');
-        foreach ($data as $key => $value) {
-            $productModel->$key = $value;
+        if ($data) {
+            foreach ($data as $key => $value) {
+                $productModel->$key = $value;
+            }
+            $productModel->save();
         }
-        $productModel->save();
         $this->redirect('list', 'product');
     }
 
@@ -35,8 +42,8 @@ class Controller_Product extends Controller_Core_Base
         if ($id = $this->getRequest()->get('id')) {
             $productModel->load($id);
         }
-         $this->renderTemplate('products/edit.phtml', [
-            'products' => $productModel
+        $this->renderTemplate('products/edit.phtml', [
+            'product' => $productModel
         ]);
     }
 

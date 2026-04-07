@@ -1,21 +1,21 @@
 <?php include 'app/templates/menu.phtml'; ?>
 
-<h2><?php echo $customerGroups->customer_group_id ? 'Edit Customer Group' : 'Add New Customer Group'; ?></h2>
+<h2><?php echo $customerGroup->customer_group_id ? 'Edit Customer Group' : 'Add New Customer Group'; ?></h2>
 
 <form method="POST" action="index.php?c=customer_group&a=save">
-    <input type="hidden" name="customer_group[customer_group_id]" value="<?php echo $customerGroups->customer_group_id; ?>">
+    <input type="hidden" name="customer_group[customer_group_id]" value="<?php echo $customerGroup->customer_group_id; ?>">
 
     <table border="1" width="100%">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="customer_group[group_name]" value="<?php echo $customerGroups->group_name; ?>"></td>
+            <td><input type="text" name="customer_group[group_name]" value="<?php echo $customerGroup->group_name; ?>"></td>
         </tr>
         <tr>
             <td>Status</td>
             <td>
                 <select name="customer_group[status]">
-                    <option value="1" <?php echo ($customerGroups->status == 1) ? 'selected' : ''; ?>>Enabled</option>
-                    <option value="0" <?php echo ($customerGroups->status == 0) ? 'selected' : ''; ?>>Disabled</option>
+                    <option value="1" <?php echo ($customerGroup->status == 1) ? 'selected' : ''; ?>>Enabled</option>
+                    <option value="0" <?php echo ($customerGroup->status == 0) ? 'selected' : ''; ?>>Disabled</option>
                 </select>
             </td>
         </tr>

@@ -1,8 +1,18 @@
 <?php 
-
+require_once 'app/block/Core/layout.php';
 class Controller_Core_Base{
  
     protected $request = null;
+
+     public function getLayout()
+    {
+        return Mage::getBlock('core/layout');
+    }
+    public function setLayout($layout)
+    {
+        Mage::getBlock($layout);
+       
+    }
 
     public function setRequest($request){
         $this->request = $request;

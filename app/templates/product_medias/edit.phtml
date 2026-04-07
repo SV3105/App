@@ -1,0 +1,33 @@
+<?php include 'app/templates/menu.phtml'; ?>
+
+<h2><?php echo $media->product_media_id ? 'Edit Product Media' : 'Add New Product Media'; ?></h2>
+
+<form method="POST" action="index.php?c=product_media&a=save">
+    <input type="hidden" name="product_media[product_media_id]" value="<?php echo $media->product_media_id; ?>">
+
+    <table border="1" width="100%">
+        <tr>
+            <td>Product ID</td>
+            <td><input type="text" name="product_media[product_id]" value="<?php echo $media->product_id; ?>"></td>
+        </tr>
+        <tr>
+            <td>File Path</td>
+            <td><input type="text" name="product_media[file_path]" value="<?php echo $media->file_path; ?>"></td>
+        </tr>
+        <tr>
+            <td>Alt Text</td>
+            <td><input type="text" name="product_media[alt_text]" value="<?php echo $media->alt_text; ?>"></td>
+        </tr>
+        <tr>
+            <td>Sort Order</td>
+            <td><input type="text" name="product_media[sort_order]" value="<?php echo $media->sort_order; ?>"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="2">
+                <button type="submit">Save</button>
+                <a href="index.php?c=product_media&a=list">Back</a>
+            </td>
+        </tr>
+    </table>
+</form>

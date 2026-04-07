@@ -1,33 +1,33 @@
 <?php include 'app/templates/menu.phtml'; ?>
 
-<h2><?php echo $products->product_id ? 'Edit Product' : 'Add New Product'; ?></h2>
+<h2><?php echo $product->product_id ? 'Edit Product' : 'Add New Product'; ?></h2>
 
 <form method="POST" action="index.php?c=product&a=save">
-    <input type="hidden" name="product[product_id]" value="<?php echo $products->product_id; ?>">
+    <input type="hidden" name="product[product_id]" value="<?php echo $product->product_id; ?>">
 
     <table border="1" width="100%">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="product[name]" value="<?php echo $products->name; ?>"></td>
+            <td><input type="text" name="product[name]" value="<?php echo $product->name; ?>"></td>
         </tr>
         <tr>
             <td>Quantity</td>
-            <td><input type="text" name="product[quantity]" value="<?php echo $products->quantity; ?>"></td>
+            <td><input type="text" name="product[quantity]" value="<?php echo $product->quantity; ?>"></td>
         </tr>
         <tr>
             <td>Price</td>
-            <td><input type="text" name="product[price]" value="<?php echo $products->price; ?>"></td>
+            <td><input type="text" name="product[price]" value="<?php echo $product->price; ?>"></td>
         </tr>
         <tr>
             <td>Description</td>
-            <td><input type="text" name="product[description]" value="<?php echo $products->description; ?>"></td>
+            <td><input type="text" name="product[description]" value="<?php echo $product->description; ?>"></td>
         </tr>
         <tr>
             <td>Status</td>
             <td>
                 <select name="product[status]">
-                    <option value="1" <?php echo ($products->status == 1) ? 'selected' : ''; ?>>Enabled</option>
-                    <option value="0" <?php echo ($products->status == 0) ? 'selected' : ''; ?>>Disabled</option>
+                    <option value="1" <?php echo ($product->status == 1) ? 'selected' : ''; ?>>Enabled</option>
+                    <option value="0" <?php echo ($product->status == 0) ? 'selected' : ''; ?>>Disabled</option>
                 </select>
             </td>
         </tr>
