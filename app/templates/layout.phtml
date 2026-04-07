@@ -8,7 +8,9 @@
 <body>
     <div>header</div>
     <div>
-       content
+       <?php if ($child = $this->getChild('product/list')): ?>
+           <?php $child->toHtml(); ?>
+       <?php endif; ?>
     </div>
     <div>Footer</div>
 </body>

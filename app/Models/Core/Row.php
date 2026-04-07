@@ -3,30 +3,32 @@
 
 require_once 'Database.php';
 
-    class Model_Core_Row {
-        public $tableName = null;
-        public $primaryKey = null;
-        public $data = [];
-        public $db = null;
-        
-        public function __construct(){
-            $this->db = new Model_Core_Database();
-        }
+class Model_Core_Row
+{
+    public $tableName = null;
+    public $primaryKey = null;
+    public $data = [];
+    public $db = null;
 
-        public function load($value, $column = null)
+    public function __construct()
+    {
+        $this->db = new Model_Core_Database();
+    }
+
+    public function load($value, $column = null)
     {
         $column = $column ?? $this->primaryKey;
- 
+
         $query = "select * from {$this->tableName} where $column = '$value' limit 1";
         $row = $this->db->fetchRow($query);
- 
+
         if ($row) {
             $this->data = $row;
             return $this;
         }
         return false;
     }
- 
+
     public function fetchRow($query)
     {
         $result = $this->db->fetchRow($query);
@@ -36,7 +38,7 @@ require_once 'Database.php';
         }
         return false;
     }
- 
+
     public function fetchAll($query)
     {
         $rows = $this->db->fetchAll($query);
@@ -50,76 +52,78 @@ require_once 'Database.php';
         }
         return false;
     }
- 
+
     public function insert()
     {
         $column = implode(",", array_keys($this->data));
         $values = array_map(function ($v) {
             return "'$v'";
         }, array_values($this->data));
- 
+
         $values = implode(",", $values);
- 
+
         $query = "insert into {$this->tableName} ($column) values ($values)";
         $id = $this->db->insert($query);
- 
+
         if ($id) {
             $this->data[$this->primaryKey] = $id;
             return $this;
         }
- 
+
         return false;
     }
- 
+
     public function update()
-{
-    if (empty($this->data[$this->primaryKey])) {
-        return false;
+    {
+        if (empty($this->data[$this->primaryKey])) {
+            return false;
+        }
+        $id = $this->data[$this->primaryKey];
+        $data = $this->data;
+        unset($data[$this->primaryKey]);
+        if (empty($data)) {
+            return $this;
+        }
+        $set = [];
+        foreach ($data as $key => $value) {
+            $set[] = "$key='$value'";
+        }
+        $setList = implode(",", $set);
+        $query = "update {$this->tableName} set $setList where {$this->primaryKey} = '$id'";
+
+        return $this->db->update($query) ? $this : false;
     }
-    $id = $this->data[$this->primaryKey];
-    $data = $this->data;
-    unset($data[$this->primaryKey]);
-    if (empty($data)) {
-        return $this; 
-    }
-    $set = [];
-    foreach ($data as $key => $value) {
-        $set[] = "$key='$value'";
-    }
-    $setList = implode(",", $set);
-    $query = "update {$this->tableName} set $setList where {$this->primaryKey} = '$id'";
-   
-    return $this->db->update($query) ? $this : false;
-}
- 
+
     public function save()
-{
-    if (empty($this->data[$this->primaryKey])) {
-        return $this->insert();
+    {
+        if (empty($this->data[$this->primaryKey])) {
+            return $this->insert();
+        }
+        return $this->update();
     }
-    return $this->update();
-}
- 
+
     public function delete()
-{
-    if (empty($this->data[$this->primaryKey])) {
-        return false;
+    {
+        if (empty($this->data[$this->primaryKey])) {
+            return false;
+        }
+
+        $id = $this->data[$this->primaryKey];
+        $query = "delete from {$this->tableName} where {$this->primaryKey} = '$id'";
+        return $this->db->delete($query);
     }
 
-    $id = $this->data[$this->primaryKey];
-    $query = "delete from {$this->tableName} where {$this->primaryKey} = '$id'";
-    return $this->db->delete($query);
+
+
+    public function __set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
+
+    public function __get($key)
+    {
+        return array_key_exists($key, $this->data) ? $this->data[$key] : null;
+    }
+
 }
-
- 
-
-        public function __set($key, $value){
-            $this->data[$key] = $value;
-        }
-
-        public function __get($key){
-            return array_key_exists($key, $this->data) ? $this->data[$key] : null;
-        }
-
-    }
 ?>

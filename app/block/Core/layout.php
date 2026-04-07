@@ -43,7 +43,7 @@ class Block_Core_Layout
     }
     public function getChild($key)
     {
-        return $this->children[$key];
+        return $this->children[$key] ?? null;
     }
     public function toHtml()
     {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'app/Models/Customer.php';
 require_once 'app/Models/Customergroup.php';
 require_once 'app/controllers/Core/Base.php';
@@ -11,7 +11,7 @@ class Controller_Customer extends Controller_Core_Base
         $customerModel = new Model_Customer();
         $sql = "SELECT c.*, cg.group_name FROM customer c LEFT JOIN customer_group cg ON c.customer_group_id = cg.customer_group_id ";
         $customers = $customerModel->fetchAll($sql);
-          $this->renderTemplate('customers/list.phtml', [
+        $this->renderTemplate('customers/list.phtml', [
             'customers' => $customers
         ]);
     }
@@ -39,7 +39,7 @@ class Controller_Customer extends Controller_Core_Base
         $groupModel = new Model_Customergroup();
         $groups = $groupModel->fetchAll("SELECT * FROM customer_group");
 
-         $this->renderTemplate('customers/edit.phtml', [
+        $this->renderTemplate('customers/edit.phtml', [
             'customers' => $customerModel,
             'customerGroups' => $groups
         ]);

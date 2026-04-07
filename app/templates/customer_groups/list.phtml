@@ -13,8 +13,8 @@
         <th>Updated Date</th>
         <th>Actions</th>
     </tr>
-    <?php if (!empty($customerGroups)): ?>
-        <?php foreach ($customerGroups as $row): ?>
+    <?php if ($this->customerGroups): ?>
+        <?php foreach ($this->customerGroups as $row): ?>
             <tr>
                 <td><?php echo $row->customer_group_id; ?></td>
                 <td><?php echo $row->group_name; ?></td>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'app/Models/Customergroup.php';
 require_once 'app/controllers/Core/Base.php';
 
@@ -10,7 +10,7 @@ class Controller_Customergroup extends Controller_Core_Base
         $customerGroupModel = new Model_Customergroup();
         $sql = "SELECT * FROM customer_group";
         $customerGroups = $customerGroupModel->fetchAll($sql);
-          $this->renderTemplate('customer_groups/list.phtml', [
+        $this->renderTemplate('customer_groups/list.phtml', [
             'customerGroups' => $customerGroups
         ]);
     }
@@ -37,7 +37,7 @@ class Controller_Customergroup extends Controller_Core_Base
         if ($id = $this->getRequest()->get('id')) {
             $customerGroupModel->load($id);
         }
-         $this->renderTemplate('customer_groups/edit.phtml', [
+        $this->renderTemplate('customer_groups/edit.phtml', [
             'customerGroup' => $customerGroupModel
         ]);
     }

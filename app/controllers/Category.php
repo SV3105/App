@@ -10,7 +10,7 @@ class Controller_Category extends Controller_Core_Base
         $categoryModel = new Model_Category();
         $sql = "SELECT * FROM category";
         $categories = $categoryModel->fetchAll($sql);
-          $this->renderTemplate('categories/list.phtml', [
+        $this->renderTemplate('categories/list.phtml', [
             'categories' => $categories
         ]);
     }
@@ -35,7 +35,7 @@ class Controller_Category extends Controller_Core_Base
         if ($id = $this->getRequest()->get('id')) {
             $categoryModel->load($id);
         }
-         $this->renderTemplate('categories/edit.phtml', [
+        $this->renderTemplate('categories/edit.phtml', [
             'categories' => $categoryModel
         ]);
     }

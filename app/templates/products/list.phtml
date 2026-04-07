@@ -16,8 +16,8 @@
         <th>Updated Date</th>
         <th>Actions</th>
     </tr>
-    <?php if (!empty($products)): ?>
-        <?php foreach ($products as $row): ?>
+    <?php if ($this->products): ?>
+        <?php foreach ($this->products as $row): ?>
             <tr>
                 <td><?php echo $row->product_id; ?></td>
                 <td><?php echo $row->name; ?></td>

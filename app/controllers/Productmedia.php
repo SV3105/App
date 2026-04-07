@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'app/Models/Productmedia.php';
 require_once 'app/controllers/Core/Base.php';
 
@@ -10,7 +10,7 @@ class Controller_Productmedia extends Controller_Core_Base
         $productMediaModel = new Model_Productmedia();
         $sql = "SELECT * FROM product_media";
         $productMedias = $productMediaModel->fetchAll($sql);
-        
+
         $this->renderTemplate('product_medias/list.phtml', [
             'productMedias' => $productMedias
         ]);
@@ -38,7 +38,7 @@ class Controller_Productmedia extends Controller_Core_Base
         if ($id = $this->getRequest()->get('id')) {
             $productMediaModel->load($id);
         }
-         $this->renderTemplate('product_medias/edit.phtml', [
+        $this->renderTemplate('product_medias/edit.phtml', [
             'media' => $productMediaModel
         ]);
     }

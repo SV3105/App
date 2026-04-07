@@ -8,21 +8,23 @@ class Controller_Product extends Controller_Core_Base
 
     public function listAction()
     {
-        $productModel = new Model_Product();
+
+        $productModel = Mage::getModel('product');
         $sql = "SELECT * FROM product";
         $products = $productModel->fetchAll($sql);
-        // $block = Mage::getBlock('product/list');
-        // $layout = $this->getLayout();
-        // $layout->addChild('product/list', $block);
-        // $layout->toHtml();
-        $this->renderTemplate('products/list.phtml', [
-            'products' => $products
-        ]);
+        $block = Mage::getBlock('product/list');
+        $layout = $this->getLayout();
+        $layout->addChild('product/list', $block);
+        $block->products = $products;
+        $layout->toHtml();
+        // $this->renderTemplate('products/list.phtml', [
+        //     'products' => $products
+        // ]);
     }
 
     public function saveAction()
     {
-        $productModel = new Model_Product();
+        $productModel = Mage::getModel('product');
         if ($id = $this->getRequest()->get('id')) {
             $productModel->load($id);
         }
@@ -38,7 +40,7 @@ class Controller_Product extends Controller_Core_Base
 
     public function editAction()
     {
-        $productModel = new Model_Product();
+        $productModel = Mage::getModel('product');
         if ($id = $this->getRequest()->get('id')) {
             $productModel->load($id);
         }
@@ -49,7 +51,7 @@ class Controller_Product extends Controller_Core_Base
 
     public function deleteAction()
     {
-        $productModel = new Model_Product();
+        $productModel = Mage::getModel('product');
         if ($id = $this->getRequest()->get('id')) {
             $productModel->load($id);
             $productModel->delete();
