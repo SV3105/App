@@ -1,11 +1,8 @@
 
-
-<?php include 'app/templates/menu.phtml'; ?>
-
-<h2><?php echo $customers->customer_id ? 'Edit Customer' : 'Add New Customer'; ?></h2>
+<h2><?php echo $this->getData()->customer_id ? 'Edit Customer' : 'Add New Customer'; ?></h2>
 
 <form method="POST" action="index.php?c=customer&a=save">
-    <input type="hidden" name="customer[customer_id]" value="<?php echo $customers->customer_id; ?>">
+    <input type="hidden" name="customer[customer_id]" value="<?php echo $this->getData()->customer_id; ?>">
 
     <table border="1" width="100%">
         <tr>

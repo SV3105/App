@@ -6,8 +6,13 @@ require_once 'app/Models/Request.php';
 class Boot{
   public static function init(){
     $request = Mage::getModel('request');
-    $controller = Mage::getController($request->get('c', 'product'));
-    $controller->dispatch();
+   $controller = Mage::getController($request->get('c', 'product'));
+    if ($controller) {
+        $controller->dispatch();
+    } else {
+        die("Error: Controller not found.");
+    }
+
 }
 
 }

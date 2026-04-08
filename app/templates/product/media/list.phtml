@@ -1,4 +1,4 @@
-<?php include 'app/templates/menu.phtml'; ?>
+
 
 <h2>Product Media List</h2>
 <a href="index.php?c=product_media&a=edit">Add New Media</a>
@@ -15,8 +15,8 @@
         <th>Updated Date</th>
         <th>Actions</th>
     </tr>
-    <?php if (!empty($productMedias)): ?>
-        <?php foreach ($productMedias as $row): ?>
+    <?php if (!empty($this->getData())): ?>
+        <?php foreach ($this->getData() as $row): ?>
             <tr>
                 <td><?php echo $row->product_media_id; ?></td>
                 <td><?php echo $row->product_id; ?></td>

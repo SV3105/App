@@ -1,4 +1,8 @@
 <?php
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT_PATH', getcwd());
+define('APP_PATH', ROOT_PATH . DS . 'app');
+
 
 require_once "app/Boot.php";
 class Mage
@@ -6,7 +10,6 @@ class Mage
 
     public static function init()
     {
-
         // echo "111";
         Boot::init();
 
@@ -14,35 +17,45 @@ class Mage
 
     public static function getController($controllerName)
     {
-        $classNameRaw = str_replace('/', '_', $controllerName);
-        $parts = explode('_', $classNameRaw);
+        $controllerName = str_replace(['/', '\\'], '_', $controllerName);
+        $parts = explode('_', $controllerName);
         $parts = array_map('ucfirst', $parts);
+
         $controllerClass = 'Controller_' . implode('_', $parts);
         $controllerFile = 'app/controllers/' . implode('/', $parts) . '.php';
+
         if (!file_exists($controllerFile)) {
-            die("Controller file not found: " . $controllerFile);
+            return false;
         }
+ 
         require_once $controllerFile;
+ 
         if (!class_exists($controllerClass)) {
-            die("Controller class not found: " . $controllerClass);
+            return false;
         }
+ 
         return new $controllerClass();
     }
-
+ 
     public static function getModel($modelName)
     {
-        $classNameRaw = str_replace('/', '_', $modelName);
-        $parts = explode('_', $classNameRaw);
+        $modelName = str_replace(['/', '\\'], '_', $modelName);
+        $parts = explode('_', $modelName);
         $parts = array_map('ucfirst', $parts);
+
         $modelClass = 'Model_' . implode('_', $parts);
         $modelFile = 'app/Models/' . implode('/', $parts) . '.php';
+
         if (!file_exists($modelFile)) {
-            die("Model file not found: " . $modelFile);
+            return false;
         }
+ 
         require_once $modelFile;
+ 
         if (!class_exists($modelClass)) {
-            die("Model class not found: " . $modelClass);
+            return false;
         }
+ 
         return new $modelClass();
     }
 

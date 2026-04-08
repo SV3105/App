@@ -7,17 +7,21 @@ class Controller_Category extends Controller_Core_Base
 
     public function listAction()
     {
-        $categoryModel = new Model_Category();
+        $categoryModel = Mage::getModel('category');
         $sql = "SELECT * FROM category";
         $categories = $categoryModel->fetchAll($sql);
-        $this->renderTemplate('categories/list.phtml', [
-            'categories' => $categories
-        ]);
+        $layout = Mage::getBlock('layout');
+        $layout->setTemplate('layout');
+        $content = $layout->getChild('content');
+        $list = Mage::getBlock('categories/list');
+        $content->addChild('list', $list);
+        $list->setData($categories);
+        $layout->render();
     }
 
     public function saveAction()
     {
-        $categoryModel = new Model_Category();
+        $categoryModel = Mage::getModel('category');
         if ($id = $this->getRequest()->get('id')) {
             $categoryModel->load($id);
         }
@@ -31,18 +35,26 @@ class Controller_Category extends Controller_Core_Base
 
     public function editAction()
     {
-        $categoryModel = new Model_Category();
+        try{
+        $categoryModel = Mage::getModel('category');
         if ($id = $this->getRequest()->get('id')) {
             $categoryModel->load($id);
         }
-        $this->renderTemplate('categories/edit.phtml', [
-            'categories' => $categoryModel
-        ]);
+        $layout = Mage::getBlock('layout');
+        $layout->setTemplate('layout');
+        $content = $layout->getChild('content');
+        $edit = Mage::getBlock('categories/edit');
+        $content->addChild('edit', $edit);
+        $edit->setData(['category' => $categoryModel]);
+        $layout->render();
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
     }
 
     public function deleteAction()
     {
-        $categoryModel = new Model_Category();
+        $categoryModel = Mage::getModel('category');
         if ($id = $this->getRequest()->get('id')) {
             $categoryModel->load($id);
             $categoryModel->delete();

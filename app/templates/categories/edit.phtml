@@ -1,25 +1,25 @@
-<?php include 'app/templates/menu.phtml'; ?>
 
-<h2><?php echo $categories->category_id ? 'Edit Category' : 'Add New Category'; ?></h2>
+
+<h2><?php echo $category->category_id ? 'Edit Category' : 'Add New Category'; ?></h2>
 
 <form method="POST" action="index.php?c=category&a=save">
-    <input type="hidden" name="category[category_id]" value="<?php echo $categories->category_id; ?>">
+    <input type="hidden" name="category[category_id]" value="<?php echo $category->category_id; ?>">
 
     <table border="1" width="100%">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="category[name]" value="<?php echo $categories->name; ?>"></td>
+            <td><input type="text" name="category[name]" value="<?php echo $category->name; ?>"></td>
         </tr>
         <tr>
             <td>Description</td>
-            <td><input type="text" name="category[description]" value="<?php echo $categories->description; ?>"></td>
+            <td><input type="text" name="category[description]" value="<?php echo $category->description; ?>"></td>
         </tr>
         <tr>
             <td>Status</td>
             <td>
                 <select name="category[status]">
-                    <option value="1" <?php echo ($categories->status == 1) ? 'selected' : ''; ?>>Enabled</option>
-                    <option value="0" <?php echo ($categories->status == 0) ? 'selected' : ''; ?>>Disabled</option>
+                    <option value="1" <?php echo ($category->status == 1) ? 'selected' : ''; ?>>Enabled</option>
+                    <option value="0" <?php echo ($category->status == 0) ? 'selected' : ''; ?>>Disabled</option>
                 </select>
             </td>
         </tr>

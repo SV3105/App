@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout</title>
-</head>
-<body>
-    <div>header</div>
-    <div>
-       <?php if ($child = $this->getChild('product/list')): ?>
-           <?php $child->toHtml(); ?>
-       <?php endif; ?>
-    </div>
-    <div>Footer</div>
-</body>
-</html>
+<div>
+    <?php $this->getChild('header')->render(); ?>
+    <?php $this->getChild('content')->render(); ?>
+    <?php $this->getChild('footer')->render(); ?>
+</div>

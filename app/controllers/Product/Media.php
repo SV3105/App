@@ -1,24 +1,27 @@
 <?php
-require_once 'app/Models/Productmedia.php';
+require_once 'app/Models/Product/Media.php';
 require_once 'app/controllers/Core/Base.php';
 
-class Controller_Productmedia extends Controller_Core_Base
+class Controller_Product_Media extends Controller_Core_Base
 {
 
     public function listAction()
     {
-        $productMediaModel = new Model_Productmedia();
+        $productMediaModel = new Model_Product_Media();
         $sql = "SELECT * FROM product_media";
-        $productMedias = $productMediaModel->fetchAll($sql);
-
-        $this->renderTemplate('product_medias/list.phtml', [
-            'productMedias' => $productMedias
-        ]);
+        $product_medias = $productMediaModel->fetchAll($sql);
+        $layout = Mage::getBlock("layout");
+        $layout->setTemplate("layout");
+        $list = Mage::getBlock("product/media/list");
+        $content = $layout->getChild("content");
+        $content->addChild("list", $list);
+        $list->setData($product_medias);
+        $layout->render();
     }
 
     public function saveAction()
     {
-        $productMediaModel = new Model_Productmedia();
+        $productMediaModel = new Model_Product_Media();
         if ($id = $this->getRequest()->get('id')) {
             $productMediaModel->load($id);
         }
@@ -34,18 +37,22 @@ class Controller_Productmedia extends Controller_Core_Base
 
     public function editAction()
     {
-        $productMediaModel = new Model_Productmedia();
+        $productMediaModel = new Model_Product_Media();
         if ($id = $this->getRequest()->get('id')) {
             $productMediaModel->load($id);
         }
-        $this->renderTemplate('product_medias/edit.phtml', [
-            'media' => $productMediaModel
-        ]);
+        $layout = Mage::getBlock("layout");
+        $layout->setTemplate("layout");
+        $edit = Mage::getBlock("product/media/edit");
+        $content = $layout->getChild("content");
+        $content->addChild("edit", $edit);
+        $edit->setData(['media' => $productMediaModel]);
+        $layout->render();
     }
 
     public function deleteAction()
     {
-        $productMediaModel = new Model_Productmedia();
+        $productMediaModel = new Model_Product_Media();
         if ($id = $this->getRequest()->get('id')) {
             $productMediaModel->load($id);
             $productMediaModel->delete();

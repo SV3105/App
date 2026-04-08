@@ -1,13 +1,14 @@
 <?php 
-require_once 'app/block/Core/layout.php';
+require_once 'app/block/layout.php';
 class Controller_Core_Base{
  
     protected $request = null;
 
-     public function getLayout()
+    public function getLayout()
     {
-        return Mage::getBlock('core/layout');
+        return Mage::getBlock('layout');
     }
+
     public function setLayout($layout)
     {
         Mage::getBlock($layout);

@@ -1,4 +1,3 @@
-<?php include 'app/templates/menu.phtml'; ?>
 
 <h2>Customer List</h2>
 <a href="index.php?c=customer&a=edit">Add New Customer</a>
@@ -16,8 +15,8 @@
         <th>Updated Date</th>
         <th>Actions</th>
     </tr>
-    <?php if (!empty($customers)): ?>
-        <?php foreach ($customers as $row): ?>
+    <?php if (!empty($this->getData())): ?>
+        <?php foreach ($this->getData() as $row): ?>
             <tr>
                 <td><?php echo $row->customer_id; ?></td>
                 <td><?php echo $row->first_name; ?></td>
