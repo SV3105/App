@@ -1,0 +1,32 @@
+
+
+<h2>Module List</h2>
+<a href="index.php?c=module&a=edit">Add New Module</a>
+<br><br>
+
+<table border="1" width="100%">
+    <tr>
+        
+        <th>Name</th>
+        <th>Code</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    <?php if ($this->getDataValue('modules')): ?>
+        <?php foreach ($this->getDataValue('modules') as $row): ?>
+            <tr>
+                <td><?php echo $row->name; ?></td>
+                <td><?php echo $row->code; ?></td>
+                <td><?php echo $row->status; ?></td>
+                <td>
+                    <a href="index.php?c=module&a=edit&id=<?php echo $row->module_id; ?>">Edit</a> |
+                    <a href="index.php?c=module&a=delete&id=<?php echo $row->module_id; ?>">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="9">No records found.</td>
+        </tr>
+    <?php endif; ?>
+</table>

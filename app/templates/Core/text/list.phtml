@@ -1,0 +1,10 @@
+
+<div>
+    <?php 
+    if(!empty($children = $this->getChildren())) {
+        foreach($children as $child) {
+            echo $child->render();
+        }
+    }
+    ?>
+</div>

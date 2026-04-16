@@ -22,7 +22,7 @@ class Mage
         $parts = array_map('ucfirst', $parts);
 
         $controllerClass = 'Controller_' . implode('_', $parts);
-        $controllerFile = 'app/controllers/' . implode('/', $parts) . '.php';
+        $controllerFile = APP_PATH . DS . 'controllers' . DS . implode(DS, $parts) . '.php';
 
         if (!file_exists($controllerFile)) {
             return false;
@@ -44,7 +44,7 @@ class Mage
         $parts = array_map('ucfirst', $parts);
 
         $modelClass = 'Model_' . implode('_', $parts);
-        $modelFile = 'app/Models/' . implode('/', $parts) . '.php';
+        $modelFile = APP_PATH . DS . 'models' . DS . implode(DS, $parts) . '.php';
 
         if (!file_exists($modelFile)) {
             return false;
@@ -70,7 +70,7 @@ class Mage
         $blockClass = 'Block_' . implode('_', $parts);
 
 
-        $blockFile = 'app/block/' . implode('/', $parts) . '.php';
+        $blockFile = APP_PATH . DS . 'blocks' . DS . implode(DS, $parts) . '.php';
 
         if (!file_exists($blockFile)) {
             die("Block file not found: " . $blockFile);

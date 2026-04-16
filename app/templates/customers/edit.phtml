@@ -1,12 +1,14 @@
+<?php $customers = $this->getCustomers(); ?>
+<?php $customer_groups = $this->getCustomerGroups(); ?>
 
-<h2><?php echo $this->getData()->customer_id ? 'Edit Customer' : 'Add New Customer'; ?></h2>
-
+<h2><?php echo $customers->customer_id ? 'Edit Customer' : 'Add New Customer'; ?></h2>
+ 
 <form method="POST" action="index.php?c=customer&a=save">
-    <input type="hidden" name="customer[customer_id]" value="<?php echo $this->getData()->customer_id; ?>">
-
+    <input type="hidden" name="customer[customer_id]" value="<?php echo $customers->customer_id; ?>">
+ 
     <table border="1" width="100%">
         <tr>
-            <td>Name</td>
+            <td>First Name</td>
             <td><input type="text" name="customer[first_name]" value="<?php echo $customers->first_name; ?>"></td>
         </tr>
         <tr>
@@ -15,17 +17,16 @@
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="text" name="customer[email]" value="<?php echo $customers->email; ?>"></td>
+            <td><input type="email" name="customer[email]" value="<?php echo $customers->email; ?>"></td>
         </tr>
+       
         <tr>
             <td>Group Name</td>
             <td>
                 <select name="customer[customer_group_id]">
-                    <option value="">-- Select Group --</option>
-                    <?php foreach ($customerGroups as $group): ?>
-                        <option value="<?php echo $group->customer_group_id; ?>" <?php echo ($customers->customer_group_id == $group->customer_group_id) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($group->group_name); ?>
-                        </option>
+                    <option value="">Select Group</option>
+                    <?php foreach($customer_groups as $group): ?>
+                        <option value="<?php echo $group->customer_group_id; ?>" <?php echo ($customers->customer_group_id == $group->customer_group_id) ? 'selected' : ''; ?>><?php echo $group->group_name; ?></option>
                     <?php endforeach; ?>
                 </select>
             </td>
@@ -33,9 +34,10 @@
         <tr>
             <td>Status</td>
             <td>
-                <select name="customer[status]">
-                    <option value="1" <?php echo ($customers->status == 1) ? 'selected' : ''; ?>>Enabled</option>
-                    <option value="0" <?php echo ($customers->status == 0) ? 'selected' : ''; ?>>Disabled</option>
+                 <select name="customer[status]">
+                    <?php foreach($customers->getStatusOption() as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" <?php echo $customers->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </td>
         </tr>

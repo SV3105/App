@@ -1,3 +1,6 @@
+<?php $product = $this->getProduct(); ?>
+<?php $categories = $this->getCategories(); ?>
+
 <h2><?php echo $product->product_id ? 'Edit Product' : 'Add New Product'; ?></h2>
 
 <form method="POST" action="index.php?c=product&a=save">
@@ -24,11 +27,24 @@
             <td>Status</td>
             <td>
                 <select name="product[status]">
-                    <option value="1" <?php echo ($product->status == 1) ? 'selected' : ''; ?>>Enabled</option>
-                    <option value="0" <?php echo ($product->status == 0) ? 'selected' : ''; ?>>Disabled</option>
+                    <?php foreach($product->getStatusOption() as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" <?php echo $product->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </td>
         </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select name="product[category_id]">
+                    <option value="">Select Category</option>
+                    <?php foreach($categories as $category): ?>
+                        <option value="<?php echo $category->category_id; ?>" <?php echo ($product->category_id == $category->category_id) ? 'selected' : ''; ?>><?php echo $category->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+       
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>

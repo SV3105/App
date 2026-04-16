@@ -1,0 +1,35 @@
+<h2>Admin List</h2>
+<a href="index.php?c=admin&a=edit">Add New Admin</a>
+<br><br>
+
+<table border="1" width="100%">
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Created Date</th>
+        <th>Updated Date</th>
+        <th>Actions</th>
+    </tr>
+    <?php if (!empty($this->getData())): ?>
+        <?php foreach ($this->getData() as $row): ?>
+            <tr>
+                <td><?php echo $row->admin_id; ?></td>
+                <td><?php echo $row->username; ?></td>
+                <td><?php echo $row->email; ?></td>
+                <td><?php echo $row->status; ?></td>
+                <td><?php echo $row->created_date; ?></td>
+                <td><?php echo $row->updated_date; ?></td>
+                <td>
+                    <a href="index.php?c=admin&a=edit&id=<?php echo $row->admin_id; ?>">Edit</a> |
+                    <a href="index.php?c=admin&a=delete&id=<?php echo $row->admin_id; ?>">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="9">No records found.</td>
+        </tr>
+    <?php endif; ?>
+</table>

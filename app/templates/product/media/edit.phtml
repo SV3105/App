@@ -1,33 +1,59 @@
+<h2>Product Media</h2>
+<?php $media = $this->getDataValue('media'); ?>
 
-
-<h2><?php echo $media->product_media_id ? 'Edit Product Media' : 'Add New Product Media'; ?></h2>
-
-<form method="POST" action="index.php?c=product_media&a=save">
-    <input type="hidden" name="product_media[product_media_id]" value="<?php echo $media->product_media_id; ?>">
-
+<form action="index.php?c=product_media&a=save&id=<?php echo $this->getDataValue('product_id'); ?>" method="POST">
     <table border="1" width="100%">
-        <tr>
-            <td>Product ID</td>
-            <td><input type="text" name="product_media[product_id]" value="<?php echo $media->product_id; ?>"></td>
-        </tr>
-        <tr>
-            <td>File Path</td>
-            <td><input type="text" name="product_media[file_path]" value="<?php echo $media->file_path; ?>"></td>
-        </tr>
-        <tr>
-            <td>Alt Text</td>
-            <td><input type="text" name="product_media[alt_text]" value="<?php echo $media->alt_text; ?>"></td>
-        </tr>
-        <tr>
-            <td>Sort Order</td>
-            <td><input type="text" name="product_media[sort_order]" value="<?php echo $media->sort_order; ?>"></td>
-        </tr>
-        
-        <tr>
-            <td colspan="2">
-                <button type="submit">Save</button>
-                <a href="index.php?c=product_media&a=list">Back</a>
-            </td>
-        </tr>
-    </table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Id</th>
+                    <th>Alt Text</th>
+                    <th>Base</th>
+                    <th>Thumb</th>
+                    <th>Small</th>
+                    <th>Gallary</th>
+                    <th>Enabled</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($media)): ?>
+                    <?php foreach ($media as $item): ?>
+                        <tr>
+                            <td><img src="app/media/<?php echo $item->file_path; ?>" alt="Image" style="width:100px; height: 80px; "></td>
+                           
+                            <td><?php echo $item->product_id; ?></td>
+                           
+                            <td><input type="text" name="item[<?php echo $item->product_media_id; ?>][alt_text]" value="<?php echo htmlspecialchars($item->alt_text ?? ''); ?>"></td>
+                           
+                            <td><input type="radio" name="base" value="<?php echo $item->product_media_id; ?>" <?php echo ($item->base) ? 'checked' : ''; ?>></td>
+                           
+                            <td><input type="radio" name="thumb" value="<?php echo $item->product_media_id; ?>" <?php echo ($item->thumb) ? 'checked' : ''; ?>></td>
+                           
+                            <td><input type="radio" name="small" value="<?php echo $item->product_media_id; ?>" <?php echo ($item->small) ? 'checked' : ''; ?>></td>
+                           
+                            <td><input type="checkbox" name="item[<?php echo $item->product_media_id; ?>][gallery]" value="1" <?php echo ($item->gallery) ? 'checked' : ''; ?>></td>
+                           
+                            <td><input type="checkbox" name="item[<?php echo $item->product_media_id; ?>][status]" value="1" <?php echo ($item->status) ? 'checked' : ''; ?>></td>
+                           
+                            <td><a href="index.php?c=product_media&a=delete&id=<?php echo $item->product_media_id; ?>">Remove</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8">No records found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    <br>
+    <input type="submit" value="Update">
+    <a href="index.php?c=product&a=list">Back to Products</a>
 </form>
+    <div>
+        <form action="index.php?c=product_media&a=upload&id=<?php echo $this->getDataValue('product_id'); ?>" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file_path">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</div>

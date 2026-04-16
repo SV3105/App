@@ -1,5 +1,5 @@
 <?php
-require_once 'app/Models/Customer/Group.php';
+require_once 'app/models/Customer/Group.php';
 require_once 'app/controllers/Core/Base.php';
 
 class Controller_Customer_Group extends Controller_Core_Base
@@ -10,11 +10,10 @@ class Controller_Customer_Group extends Controller_Core_Base
         $customerGroupModel = Mage::getModel('customer/group');
         $sql = "SELECT * FROM customer_group";
         $customer_groups = $customerGroupModel->fetchAll($sql);
-        $layout = Mage::getBlock("layout");
-        $layout->setTemplate("layout");
-        $list = Mage::getBlock("customer/group/list");
-        $content = $layout->getChild("content");
-        $content->addChild("list", $list);
+        $layout = $this->getLayout();
+        $content = $layout->getChild('content');
+        $list = Mage::getBlock('customer/group/list');
+        $content->addChild('list', $list);
         $list->setData($customer_groups);
         $layout->render();
     }
@@ -41,11 +40,10 @@ class Controller_Customer_Group extends Controller_Core_Base
         if ($id = $this->getRequest()->get('id')) {
             $customerGroupModel->load($id);
         }
-        $layout = Mage::getBlock("layout");
-        $layout->setTemplate("layout");
-        $edit = Mage::getBlock("customer/group/edit");
-        $content = $layout->getChild("content");
-        $content->addChild("edit", $edit);
+        $layout = $this->getLayout();
+        $content = $layout->getChild('content');
+        $edit = Mage::getBlock('customer/group/edit');
+        $content->addChild('edit', $edit);
         $edit->setData(['customer_group' => $customerGroupModel]);
         $layout->render();
     }

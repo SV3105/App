@@ -1,9 +1,0 @@
-
-<div>
-    <?php if ($this->getRequest()->get('a') == 'list'): ?>
-        <?php $this->getChild('list')->render(); ?>
-
-    <?php elseif ($this->getRequest()->get('a') == 'edit'): ?>
-        <?php $this->getChild('edit')->render(); ?>
-    <?php endif; ?>
-</div>

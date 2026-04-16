@@ -1,0 +1,27 @@
+<h2>Menu list</h2>
+<a href="index.php?c=menu&a=edit">Add Menu</a>
+<table border="1" width="100%">
+    <tr>
+        <th>Menu ID</th>
+        <th>Name</th>
+        <th>controller</th>
+        <th>action</th>
+        <th>status</th>
+        <th>position</th>
+        <th>Action</th>
+    </tr>
+    <?php foreach ($this->getDataValue('menus') as $menu): ?>
+        <tr>
+            <td><?php echo $menu->menu_id; ?></td>
+            <td><?php echo $menu->name; ?></td>
+            <td><?php echo $menu->controller; ?></td>
+            <td><?php echo $menu->action; ?></td>
+            <td><?php echo $menu->status; ?></td>
+            <td><?php echo $menu->position; ?></td>
+            <td>
+                <a href="index.php?c=menu&a=edit&id=<?php echo $menu->menu_id; ?>">Edit</a>
+                <a href="index.php?c=menu&a=delete&id=<?php echo $menu->menu_id; ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

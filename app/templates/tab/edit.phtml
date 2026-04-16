@@ -1,0 +1,45 @@
+<?php $tab= $this->getTab(); ?>
+<?php $modules = $this->getModules(); ?>
+
+<h2><?php echo $tab->tab_id ? 'Edit Tab' : 'Add New Tab'; ?></h2>
+
+<form method="POST" action="index.php?c=tab&a=save">
+    <input type="hidden" name="tab[tab_id]" value="<?php echo $tab->tab_id; ?>">
+
+    <table border="1" width="100%">
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="tab[name]" value="<?php echo $tab->name; ?>"></td>
+        </tr>
+        <tr>
+            <td>Module</td>
+            <td>
+                <select name="tab[module_id]">
+                    <?php foreach($modules as $module): ?>
+                        <option value="<?php echo $module->module_id; ?>" <?php echo $tab->module_id == $module->module_id ? 'selected' : ''; ?>><?php echo $module->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Position</td>
+            <td><input type="number" name="tab[position]" value="<?php echo $tab->position; ?>"></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="tab[status]">
+                    <?php foreach($tab->getStatusOption() as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" <?php echo $tab->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Save</button>
+                <a href="index.php?c=tab&a=list">Back</a>
+            </td>
+        </tr>
+    </table>
+</form>

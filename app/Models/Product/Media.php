@@ -1,6 +1,6 @@
 <?php 
-require_once 'app/Models/Core/Row.php';
-class Model_Product_Media extends Model_Core_Row {
+require_once 'app/models/Core/Table.php';
+class Model_Product_Media extends Model_Core_Table {
     public function __construct(){
         parent::__construct();
         $this->tableName = "product_media";

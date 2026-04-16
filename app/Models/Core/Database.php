@@ -3,7 +3,7 @@ class Model_Core_Database {
     public $server = "127.0.0.1";
     public $username = "root";
     public $password = "";
-    public $dbname = "core-php";
+    public $dbname = "app";
     public $port = "9000";
     public $conn = null;
 
