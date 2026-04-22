@@ -3,7 +3,7 @@
 
 <h2><?php echo $product->product_id ? 'Edit Product' : 'Add New Product'; ?></h2>
 
-<form method="POST" action="index.php?c=product&a=save">
+<form method="POST" action="<?php echo $this->getUrl('save'); ?>">
     <input type="hidden" name="product[product_id]" value="<?php echo $product->product_id; ?>">
 
     <table border="1" width="100%">
@@ -48,7 +48,7 @@
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>
-                <a href="index.php?c=product&a=list">Back</a>
+                <a href="<?php echo $this->getUrl('list'); ?>">Back</a>
             </td>
         </tr>
     </table>

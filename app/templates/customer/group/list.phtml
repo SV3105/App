@@ -1,7 +1,5 @@
-
-
 <h2>Customer Group List</h2>
-<a href="index.php?c=customer_group&a=edit">Add New Customer Group</a>
+<a href="<?php echo $this->getUrl('edit', 'customer_group'); ?>">Add New Customer Group</a>
 <br><br>
 
 <table border="1" width="100%">
@@ -14,16 +12,16 @@
         <th>Actions</th>
     </tr>
     <?php if ($this->getData()): ?>
-        <?php foreach ($this->getData() as $row): ?>
+        <?php foreach ($this->getData() as $customer_group): ?>
             <tr>
-                <td><?php echo $row->customer_group_id; ?></td>
-                <td><?php echo $row->group_name; ?></td>
-                <td><?php echo $row->status; ?></td>
-                <td><?php echo $row->created_at; ?></td>
-                <td><?php echo $row->updated_at; ?></td>
+                <td><?php echo $customer_group->customer_group_id; ?></td>
+                <td><?php echo $customer_group->group_name; ?></td>
+                <td><?php echo $customer_group->getStatus(); ?></td>
+                <td><?php echo $customer_group->created_date; ?></td>
+                <td><?php echo $customer_group->updated_date; ?></td>
                 <td>
-                    <a href="index.php?c=customer_group&a=edit&id=<?php echo $row->customer_group_id; ?>">Edit</a> |
-                    <a href="index.php?c=customer_group&a=delete&id=<?php echo $row->customer_group_id; ?>">Delete</a>
+                    <a href="<?php echo $this->getUrl('edit', 'customer_group', ['id' => $customer_group->customer_group_id]); ?>">Edit</a> |
+                    <a href="<?php echo $this->getUrl('delete', 'customer_group', ['id' => $customer_group->customer_group_id]); ?>">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>

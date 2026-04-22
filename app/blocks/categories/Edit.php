@@ -8,7 +8,7 @@ class Block_Categories_Edit extends Block_Core_Template{
     public function getCategories()
     {
         $categoryModel = Mage::getModel('category');
-        $sql = "SELECT * FROM category";
+        $sql = "SELECT * FROM category ORDER BY path_id ASC";
         return $categoryModel->fetchAll($sql);
     }
 
@@ -19,24 +19,8 @@ class Block_Categories_Edit extends Block_Core_Template{
             return [];
         }
 
-        $idToName = [];
         foreach ($categories as $cat) {
-            $idToName[$cat->category_id] = $cat->name;
-        }
-
-        foreach ($categories as $cat) {
-            $pathIds = explode('/', $cat->path_id);
-            $namePath = [];
-            foreach ($pathIds as $id) {
-                if (isset($idToName[$id])) {
-                    $namePath[] = $idToName[$id];
-                }
-            }
-            if (empty($namePath)) {
-                $cat->name_path = $cat->name;
-            } else {
-                $cat->name_path = implode(' / ', $namePath);
-            }
+            $cat->name_path = $cat->getNamePath();
         }
 
         return $categories;

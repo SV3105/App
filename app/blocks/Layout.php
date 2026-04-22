@@ -7,11 +7,13 @@ class Block_Layout extends Block_Core_Template{
         $header = Mage::getBlock('layout/header');
         $footer = Mage::getBlock('layout/footer');
         $content = Mage::getBlock('layout/content');
+        $message = Mage::getBlock('layout/message');
        
 
         $this->addChild('header', $header);
         $this->addChild('content', $content);
         $this->addChild('footer', $footer);
+        $this->addChild('message', $message);
         
         
     }

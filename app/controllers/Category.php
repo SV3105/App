@@ -4,11 +4,10 @@ require_once 'app/controllers/Core/Base.php';
 
 class Controller_Category extends Controller_Core_Base
 {
-
     public function listAction()
     {
         $categoryModel = Mage::getModel('category');
-        $sql = "SELECT * FROM category";
+        $sql = "SELECT * FROM category ORDER BY path_id ASC";
         $categories = $categoryModel->fetchAll($sql);
         $layout = $this->getLayout();
         $content = $layout->getChild('content');
@@ -22,13 +21,18 @@ class Controller_Category extends Controller_Core_Base
     {
         $categoryModel = Mage::getModel('category');
         $id = $this->getRequest()->get('id');
+        if (!$id) {
+            $data = $this->getRequest()->post('category');
+            $id = isset($data['category_id']) ? $data['category_id'] : null;
+        }
+
         if ($id) {
             $categoryModel->load($id);
         }
-        
+
         $oldPath = $categoryModel->path_id;
         $data = $this->getRequest()->post('category');
-        
+
         foreach ($data as $key => $value) {
             $categoryModel->$key = $value;
         }
@@ -62,7 +66,7 @@ class Controller_Category extends Controller_Core_Base
             }
         }
 
-        $this->redirect('list', 'category');
+        $this->redirect('list', 'category', [], true);
     }
 
     public function editAction()
@@ -88,17 +92,17 @@ class Controller_Category extends Controller_Core_Base
         $categoryModel = Mage::getModel('category');
         if ($id = $this->getRequest()->get('id')) {
             $categoryModel->load($id);
-            
+
             $parentId = $categoryModel->parent_id;
             $oldPath = $categoryModel->path_id;
-            
+
             $sql = "SELECT * FROM category WHERE parent_id = '$id'";
             $children = $categoryModel->fetchAll($sql);
-            
+
             if ($children) {
                 foreach ($children as $child) {
                     $child->parent_id = $parentId;
-                    
+
                     $oldChildPath = $child->path_id;
                     if ($parentId == 0) {
                         $newChildPath = $child->category_id;
@@ -106,17 +110,17 @@ class Controller_Category extends Controller_Core_Base
                         $parent = Mage::getModel('category')->load($parentId);
                         $newChildPath = $parent->path_id . '/' . $child->category_id;
                     }
-                    
+
                     $child->path_id = $newChildPath;
                     $child->save();
-                    
+
                     $child->updateChildPaths($oldChildPath, $newChildPath);
                 }
             }
-            
+
             $categoryModel->delete();
         }
-        $this->redirect('list', 'category');
+        $this->redirect('list', 'category', [], true);
     }
 }
 

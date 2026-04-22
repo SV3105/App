@@ -55,12 +55,7 @@ class Model_Core_Database {
         if(!$result){
             return false;
         }
- 
-        $rows = [];
-        while($row = mysqli_fetch_assoc($result)){
-            $rows[] = $row;
-        }
-        return $rows;
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
  
 }

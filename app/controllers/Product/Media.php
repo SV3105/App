@@ -27,7 +27,9 @@ class Controller_Product_Media extends Controller_Core_Base
                 $mediaModel = Mage::getModel('product/media');
                 $mediaModel->load($mediaId);
                 
-               
+                $mediaModel->gallery = isset($data['gallery']) ? 1 : 0;
+                $mediaModel->status = isset($data['status']) ? 1 : 0;
+
                 foreach ($data as $key => $value) {
                     $mediaModel->$key = $value;
                 }

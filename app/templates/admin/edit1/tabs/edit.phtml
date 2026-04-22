@@ -1,0 +1,19 @@
+<?php $form = $this->getForm(); ?>
+<?php $row = $this->getRow(); ?>
+
+
+<form action="<?= $form['action']; ?>" method="<?= $form['method']; ?>">
+    <?php foreach ($this->getFields() as $field): ?>
+        <label for="<?= $field['code']; ?>"><?= $field['label']; ?></label>
+        <?php
+        $child = $this->getChild($field['type']);
+        if ($child) {
+            $child->setData(['field' => $field]);
+            $child->render();
+        }
+        ?>
+    <?php endforeach; ?>
+    <?php foreach ($this->getButtons() as $button): ?>
+        <button type="<?= $button['type']; ?>"><?= $button['label']; ?></button>
+    <?php endforeach; ?>
+</form>

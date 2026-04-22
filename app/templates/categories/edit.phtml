@@ -1,9 +1,9 @@
-<?php $data = $this->getDataValue('category'); ?>
+<?php $category = $this->getData('category'); ?>
 
-<h2><?php echo $data->category_id ? 'Edit Category' : 'Add New Category'; ?></h2>
+<h2><?php echo $category->category_id ? 'Edit Category' : 'Add New Category'; ?></h2>
 
-<form method="POST" action="index.php?c=category&a=save">
-    <input type="hidden" name="category[category_id]" value="<?php echo $data->category_id; ?>">
+<form method="POST" action="<?php echo $this->getUrl('save', 'category'); ?>">
+    <input type="hidden" name="category[category_id]" value="<?php echo $category->category_id; ?>">
 
     <table border="1" width="100%">
         <tr>
@@ -13,34 +13,34 @@
                     <option value="0">Root</option>
                     <?php 
                     $categories = $this->getCategoriesWithNames();
+                    $childPathPrefix = $category->category_id ? $category->path_id . '/' : null;
+
                     foreach ($categories as $cat): 
-                       
-                        if ($data->category_id && $cat->category_id == $data->category_id) continue;
-                        
-                        if ($data->category_id && strpos($cat->path_id, $data->path_id . '/') === 0) continue;
+                        if ($category->category_id && $cat->category_id == $category->category_id) continue;
+                        if ($childPathPrefix && str_starts_with($cat->path_id, $childPathPrefix)) continue;
                     ?>
-                        <option value="<?php echo $cat->category_id; ?>" <?php echo $data->parent_id == $cat->category_id ? 'selected' : ''; ?>>
+                        <option value="<?php echo $cat->category_id; ?>" <?php echo $category->parent_id == $cat->category_id ? 'selected' : ''; ?>>
                             <?php echo $cat->name_path; ?> 
                         </option>
                     <?php endforeach; ?>
                 </select>
             </td>
-            <input type="hidden" name="category[path_id]" value="<?php echo $data->path_id; ?>">
+            <input type="hidden" name="category[path_id]" value="<?php echo $category->path_id; ?>">
         </tr>
         <tr>
             <td>Name</td>
-            <td><input type="text" name="category[name]" value="<?php echo $data->name; ?>"></td>
+            <td><input type="text" name="category[name]" value="<?php echo $category->name; ?>"></td>
         </tr>
         <tr>
             <td>Description</td>
-            <td><input type="text" name="category[description]" value="<?php echo $data->description; ?>"></td>
+            <td><input type="text" name="category[description]" value="<?php echo $category->description; ?>"></td>
         </tr>
         <tr>
             <td>Status</td>
             <td>
                  <select name="category[status]">
-                    <?php foreach($data->getStatusOption() as $key => $value): ?>
-                        <option value="<?php echo $key; ?>" <?php echo $data->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php foreach($category->getStatusOption() as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" <?php echo $category->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                     <?php endforeach; ?>
                 </select>
             </td>
@@ -48,7 +48,7 @@
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>
-                <a href="index.php?c=category&a=list">Back</a>
+                <a href="<?php echo $this->getUrl('list'); ?>">Back</a>
             </td>
         </tr>
     </table>

@@ -2,33 +2,36 @@
 <html>
 
 <head>
-    <title>My Application</title>
+  <title>My Application</title>
+  <link rel="stylesheet" href="<?php echo $this->getBaseUrl('assets/css/style.css'); ?>">
+
 </head>
 
 <body style="height: 100vh;">
-    <table border="1" width="100%" height="100%">
-        <tr height="20%">
-            <td colspan="3">
-                <?php $this->getChild('header')->render(); ?>
-            </td>
-        </tr>
-        <tr height="60%">
-            <td width="20%">Left</td>
-            <td>
-                <?php $this->getChild('content')->render(); ?>
-            </td>
-
-            <td width="20%">
-                <a href="index.php?c=admin&a=logout">Logout</a>
-            </td>
-        </tr>
-        <tr height="20%">
-            <td colspan="3">
-                <?php $this->getChild('footer')->render(); ?>
-            </td>
-        </tr>
-    </table>
-
+  <table border="1" width="100%" height="100%">
+    <tr height="20%">
+      <td>
+        <?php $this->getChild('header')->render(); ?>
+      </td>
+    </tr>
+    <tr>
+      <?php if(!empty($_SESSION['message'])): ?>
+      <td>
+      <?php $this->getChild('message')->render(); ?>
+      </td>
+      <?php endif; ?>
+    </tr>
+    <tr height="60%">
+      <td>
+        <?php $this->getChild('content')->render(); ?>
+      </td>
+    </tr>
+    <tr height="20%">
+      <td>
+        <?php $this->getChild('footer')->render(); ?>
+      </td>
+    </tr>
+  </table>
 </body>
 
 </html>

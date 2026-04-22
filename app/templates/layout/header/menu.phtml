@@ -3,9 +3,10 @@
     <div class="menu">
         <?php if($menus): ?>
             <?php foreach($menus as $menu): ?>
-                <a href="index.php?c=<?php echo $menu->controller; ?>&a=<?php echo $menu->action; ?>"><?php echo $menu->name; ?></a>
+                <a href="<?php echo $this->getUrl($menu->action, $menu->controller); ?>"><?php echo $menu->name; ?></a>
             <?php endforeach; ?>
         <?php endif; ?>
+        <a href="<?php echo $this->getUrl('logout', 'admin'); ?>" class="logout">Logout</a>
     </div>
     <hr>
 </div>

@@ -1,35 +1,35 @@
-<?php $data = $this->getDataValue('admin'); ?>
+<?php $admins = $this->getData('admin'); ?>
 
-<h2><?php echo $data->admin_id ? 'Edit Admin' : 'Add New Admin'; ?></h2>
+<h2><?php echo $admins->admin_id ? 'Edit Admin' : 'Add New Admin'; ?></h2>
 
-<form method="POST" action="index.php?c=admin&a=save">
-    <input type="hidden" name="admin[admin_id]" value="<?php echo $data->admin_id; ?>">
+<form method="POST" action="<?php echo $this->getUrl('save'); ?>">
+    <input type="hidden" name="admin[admin_id]" value="<?php echo $admins->admin_id; ?>">
 
     <table border="1" width="100%">
         <tr>
             <td>Username</td>
             <td>
-                <input type="text" name="admin[username]" value="<?php echo $data->username; ?>">
+                <input type="text" name="admin[username]" value="<?php echo $admins->username; ?>">
             </td>
         </tr>
         <tr>
             <td>Password</td>
             <td>
-                <input type="text" name="admin[password]" value="<?php echo $data->password; ?>">
+                <input type="text" name="admin[password]" value="<?php echo $admins->password; ?>">
             </td>
         </tr>
         <tr>
             <td>Email</td>
             <td>
-                <input type="text" name="admin[email]" value="<?php echo $data->email; ?>">
+                <input type="text" name="admin[email]" value="<?php echo $admins->email; ?>">
             </td>
         </tr>
         <tr>
             <td>Status</td>
             <td>
                 <select name="admin[status]">
-                    <?php foreach($data->getStatusOption() as $key => $value): ?>
-                        <option value="<?php echo $key; ?>" <?php echo $data->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php foreach($admins->getStatusOption() as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" <?php echo $admins->status == $key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                     <?php endforeach; ?>
                 </select>
             </td>
@@ -37,7 +37,7 @@
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>
-                <a href="index.php?c=admin&a=list">Back</a>
+                <a href="<?php echo $this->getUrl('list'); ?>">Back</a>
             </td>
         </tr>
     </table>

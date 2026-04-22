@@ -1,6 +1,6 @@
-<?php $menu = $this->getDataValue('menu'); ?>
+<?php $menu = $this->getData('menu'); ?>
 <h2><?php echo $menu->menu_id ? 'Edit Menu' : 'Add Menu'; ?></h2>
-<form action="index.php?c=menu&a=save" method="post">
+<form action="<?php echo $this->getUrl('save', 'menu'); ?>" method="post">
     <input type="hidden" name="menu[menu_id]" value="<?php echo $menu->menu_id; ?>">
     <table border="1" width="100%">
         <tr>
@@ -32,7 +32,7 @@
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>
-                <a href="index.php?c=menu&a=list">Cancel</a>
+                <a href="<?php echo $this->getUrl('list'); ?>">Cancel</a>
             </td>
         </tr>
     </table>

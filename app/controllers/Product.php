@@ -40,7 +40,7 @@ class Controller_Product extends Controller_Core_Base
             }
             $productModel->save();
         }
-        $this->redirect('list', 'product');
+        $this->redirect('list', 'product', [], true);
     }
     catch(Exception $e){
         echo $e->getMessage();
@@ -89,7 +89,7 @@ class Controller_Product extends Controller_Core_Base
 
                 $productModel->delete();
             }
-            $this->redirect('list', 'product');
+            $this->redirect('list', 'product', [], true);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

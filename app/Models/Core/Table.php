@@ -59,7 +59,7 @@ class Model_Core_Table
 
     public function insert()
     {
-        $column = implode(",", array_keys($this->data));
+        $column = "`" . implode("`,`", array_keys($this->data)) . "`";
         $values = array_map(function ($v) {
             return "'$v'";
         }, array_values($this->data));
@@ -90,7 +90,7 @@ class Model_Core_Table
         }
         $set = [];
         foreach ($data as $key => $value) {
-            $set[] = "$key='$value'";
+            $set[] = "`$key`='$value'";
         }
         $setList = implode(",", $set);
         $query = "update {$this->tableName} set $setList where {$this->primaryKey} = '$id'";
@@ -143,39 +143,47 @@ class Model_Core_Table
         return $this->parents[$key];
     }
 
-    public function setParents($parents){
+    public function setParents($parents)
+    {
         $this->parents = $parents;
         return $this;
     }
 
-    public function getParents(){
+    public function getParents()
+    {
         return $this->parents;
     }
 
-    public function removeParent($key) {
+    public function removeParent($key)
+    {
         unset($this->parents[$key]);
         return $this;
     }
 
-    public function addChild($key, $value){
+    public function addChild($key, $value)
+    {
         $this->children[$key] = $value;
         return $this;
     }
 
-    public function getChild($key){
+    public function getChild($key)
+    {
         return $this->children[$key] ?? null;
     }
 
-    public function removeChild($key){
+    public function removeChild($key)
+    {
         unset($this->children[$key]);
         return $this;
     }
 
-    public function getChildren(){
+    public function getChildren()
+    {
         return $this->children;
     }
 
-    public function setChildren($children){
+    public function setChildren($children)
+    {
         $this->children = $children;
         return $this;
     }

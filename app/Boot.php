@@ -1,15 +1,14 @@
 <?php 
 require_once 'app/controllers/Core/Base.php';
 require_once 'app/controllers/Product.php';
-require_once 'app/models/Request.php';
+require_once 'app/models/Core/Request.php';
 
 class Boot{
   public static function init(){
     require_once 'app/models/Core/Session.php';
     $session = new Model_Core_Session();
     $session->startSession();
-
-    $request = Mage::getModel('request');
+    $request = Mage::getModel('core/request');
    $controller = Mage::getController($request->get('c', 'admin'));
     if ($controller) {
         $controller->dispatch();

@@ -3,7 +3,7 @@
 
 <h2><?php echo $tab->tab_id ? 'Edit Tab' : 'Add New Tab'; ?></h2>
 
-<form method="POST" action="index.php?c=tab&a=save">
+<form method="POST" action="<?php echo $this->getUrl('save'); ?>">
     <input type="hidden" name="tab[tab_id]" value="<?php echo $tab->tab_id; ?>">
 
     <table border="1" width="100%">
@@ -26,6 +26,14 @@
             <td><input type="number" name="tab[position]" value="<?php echo $tab->position; ?>"></td>
         </tr>
         <tr>
+            <td>Block Class</td>
+            <td><input type="text" name="tab[block]" value="<?php echo $tab->block; ?>" placeholder="e.g. Block_Product_Edit_Tab_General"></td>
+        </tr>
+        <tr>
+            <td>Default</td>
+            <td><input type="number" name="tab[default]" value="<?php echo $tab->default; ?>" placeholder="e.g. products/tab/general"></td>
+        </tr>
+        <tr>
             <td>Status</td>
             <td>
                 <select name="tab[status]">
@@ -38,7 +46,7 @@
         <tr>
             <td colspan="2">
                 <button type="submit">Save</button>
-                <a href="index.php?c=tab&a=list">Back</a>
+                <a href="<?php echo $this->getUrl('list'); ?>">Back</a>
             </td>
         </tr>
     </table>

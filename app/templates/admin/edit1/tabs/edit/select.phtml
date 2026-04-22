@@ -1,0 +1,6 @@
+<?php $value = $this->getValue(); ?>
+<select name="admin[<?= $field['code']; ?>]" required="<?= $field['isRequired']; ?>" id="<?= $field['code']; ?>">
+    <?php foreach ($field['options'] as $val => $label): ?>
+        <option value="<?= $val; ?>" <?= ($value == $val) ? 'selected' : ''; ?>><?= $label; ?></option>
+    <?php endforeach; ?>
+</select>

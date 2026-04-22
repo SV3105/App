@@ -1,5 +1,5 @@
 <h2>Admin List</h2>
-<a href="index.php?c=admin&a=edit">Add New Admin</a>
+<a href="<?php echo $this->getUrl('edit', 'admin'); ?>">Add New Admin</a>
 <br><br>
 
 <table border="1" width="100%">
@@ -13,17 +13,17 @@
         <th>Actions</th>
     </tr>
     <?php if (!empty($this->getData())): ?>
-        <?php foreach ($this->getData() as $row): ?>
+        <?php foreach ($this->getData() as $admin): ?>
             <tr>
-                <td><?php echo $row->admin_id; ?></td>
-                <td><?php echo $row->username; ?></td>
-                <td><?php echo $row->email; ?></td>
-                <td><?php echo $row->status; ?></td>
-                <td><?php echo $row->created_date; ?></td>
-                <td><?php echo $row->updated_date; ?></td>
+                <td><?php echo $admin->admin_id; ?></td>
+                <td><?php echo $admin->username; ?></td>
+                <td><?php echo $admin->email; ?></td>
+                <td><?php echo $admin->getStatus(); ?></td>
+                <td><?php echo $admin->created_date; ?></td>
+                <td><?php echo $admin->updated_date; ?></td>
                 <td>
-                    <a href="index.php?c=admin&a=edit&id=<?php echo $row->admin_id; ?>">Edit</a> |
-                    <a href="index.php?c=admin&a=delete&id=<?php echo $row->admin_id; ?>">Delete</a>
+                    <a href="<?php echo $this->getUrl('edit', 'admin', ['id' => $admin->admin_id]); ?>">Edit</a> |
+                    <a href="<?php echo $this->getUrl('delete', 'admin', ['id' => $admin->admin_id]); ?>">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>

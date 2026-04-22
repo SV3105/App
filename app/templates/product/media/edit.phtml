@@ -1,7 +1,7 @@
 <h2>Product Media</h2>
-<?php $media = $this->getDataValue('media'); ?>
+<?php $media = $this->getData('media'); ?>
 
-<form action="index.php?c=product_media&a=save&id=<?php echo $this->getDataValue('product_id'); ?>" method="POST">
+<form action="<?php echo $this->getUrl('save', 'product_media', ['id' => $this->getDataValue('product_id')]); ?>" method="POST">
     <table border="1" width="100%">
             <thead>
                 <tr>
@@ -36,7 +36,7 @@
                            
                             <td><input type="checkbox" name="item[<?php echo $item->product_media_id; ?>][status]" value="1" <?php echo ($item->status) ? 'checked' : ''; ?>></td>
                            
-                            <td><a href="index.php?c=product_media&a=delete&id=<?php echo $item->product_media_id; ?>">Remove</a></td>
+                            <td><a href="<?php echo $this->getUrl('product_media', 'delete', ['id' => $item->product_media_id]); ?>">Remove</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -48,10 +48,10 @@
         </table>
     <br>
     <input type="submit" value="Update">
-    <a href="index.php?c=product&a=list">Back to Products</a>
+    <a href="<?php echo $this->getUrl('list', 'product'); ?>">Back to Products</a>
 </form>
     <div>
-        <form action="index.php?c=product_media&a=upload&id=<?php echo $this->getDataValue('product_id'); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo $this->getUrl('upload', 'product_media', ['id' => $this->getDataValue('product_id')]); ?>" method="POST" enctype="multipart/form-data">
             <input type="file" name="file_path">
             <button type="submit">Upload</button>
         </form>

@@ -3,59 +3,67 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT_PATH', getcwd());
 define('APP_PATH', ROOT_PATH . DS . 'app');
 
-
 require_once "app/Boot.php";
 class Mage
 {
-
     public static function init()
     {
-        // echo "111";
         Boot::init();
+    }
 
+    public static function getBaseUrl($subpath = null)
+    {
+        // $fullurl = $_SERVER['REQUEST_SCHEME'] . '://'. $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+        $fullurl = $_SERVER['SCRIPT_NAME'];
+
+        $url = str_replace('index.php', '', $fullurl);
+        // $url = "https://localhost/project-php/App/";
+        if (!$subpath) {
+            return $url;
+        }
+        $url .= $subpath;
+        return $url;
     }
 
     public static function getController($controllerName)
     {
         $controllerName = str_replace(['/', '\\'], '_', $controllerName);
-        $parts = explode('_', $controllerName);
-        $parts = array_map('ucfirst', $parts);
+        $ucName = ucwords($controllerName, '_');
 
-        $controllerClass = 'Controller_' . implode('_', $parts);
-        $controllerFile = APP_PATH . DS . 'controllers' . DS . implode(DS, $parts) . '.php';
+        $controllerClass = 'Controller_' . $ucName;
+        $controllerFile = APP_PATH . DS . 'controllers' . DS . str_replace('_', DS, $ucName) . '.php';
 
         if (!file_exists($controllerFile)) {
             return false;
         }
- 
+
         require_once $controllerFile;
- 
+
         if (!class_exists($controllerClass)) {
             return false;
         }
- 
+
         return new $controllerClass();
     }
- 
+
     public static function getModel($modelName)
     {
         $modelName = str_replace(['/', '\\'], '_', $modelName);
-        $parts = explode('_', $modelName);
-        $parts = array_map('ucfirst', $parts);
+        $modelName = ucwords($modelName, '_');
 
-        $modelClass = 'Model_' . implode('_', $parts);
-        $modelFile = APP_PATH . DS . 'models' . DS . implode(DS, $parts) . '.php';
+        $modelClass = 'Model_' . $modelName;
+        $modelFile = APP_PATH . DS . 'models' . DS . str_replace('_', DS, $modelName) . '.php';
 
         if (!file_exists($modelFile)) {
             return false;
         }
- 
+
         require_once $modelFile;
- 
+
         if (!class_exists($modelClass)) {
             return false;
         }
- 
+
         return new $modelClass();
     }
 
@@ -63,14 +71,13 @@ class Mage
     {
 
         $classNameRaw = str_replace('/', '_', $blockName);
-        $parts = explode('_', $classNameRaw);
-        $parts = array_map('ucfirst', $parts);
+        $ucName = ucwords($classNameRaw, '_');
 
 
-        $blockClass = 'Block_' . implode('_', $parts);
+        $blockClass = 'Block_' . $ucName;
 
 
-        $blockFile = APP_PATH . DS . 'blocks' . DS . implode(DS, $parts) . '.php';
+        $blockFile = APP_PATH . DS . 'blocks' . DS . str_replace('_', DS, $ucName) . '.php';
 
         if (!file_exists($blockFile)) {
             die("Block file not found: " . $blockFile);

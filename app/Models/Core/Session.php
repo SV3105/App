@@ -10,7 +10,10 @@ class Model_Core_Session {
     }
 
     public function getSession($key) {
-        return $_SESSION[$key] ?? null;
+        if(!array_key_exists($key, $_SESSION)){
+            return null;
+        }
+        return $_SESSION[$key];
     }
 
     public function removeSession($key) {

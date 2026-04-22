@@ -1,0 +1,13 @@
+<div>
+    <?php $message = $this->getMessage(); ?>
+    <?php if($message->getSuccess()): ?>
+    <div class="success"><?php echo $message->getSuccess(); ?></div>
+    <?php endif; ?>
+    <?php if($message->getFailure()): ?>
+    <div class="failure"><?php echo $message->getFailure(); ?></div>
+    <?php endif; ?>
+    <?php if($message->getNotice()): ?>
+    <div class="notice"><?php echo $message->getNotice(); ?></div>
+    <?php endif; ?>
+    <?php $message->clearMessages(); ?>
+</div>

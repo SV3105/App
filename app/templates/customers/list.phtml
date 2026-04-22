@@ -1,6 +1,6 @@
 
 <h2>Customer List</h2>
-<a href="index.php?c=customer&a=edit">Add New Customer</a>
+<a href="<?php echo $this->getUrl('edit', 'customer'); ?>">Add New Customer</a>
 <br><br>
 
 <table border="1" width="100%">
@@ -16,19 +16,19 @@
         <th>Actions</th>
     </tr>
     <?php if (!empty($this->getData())): ?>
-        <?php foreach ($this->getData() as $row): ?>
+        <?php foreach ($this->getData() as $customer): ?>
             <tr>
-                <td><?php echo $row->customer_id; ?></td>
-                <td><?php echo $row->first_name; ?></td>
-                <td><?php echo $row->last_name; ?></td>
-                <td><?php echo $row->email; ?></td>
-                <td><?php echo $row->group_name; ?></td>
-                <td><?php echo $row->getStatus(); ?></td>
-                <td><?php echo $row->created_date; ?></td>
-                <td><?php echo $row->updated_date; ?></td>
+                <td><?php echo $customer->customer_id; ?></td>
+                <td><?php echo $customer->first_name; ?></td>
+                <td><?php echo $customer->last_name; ?></td>
+                <td><?php echo $customer->email; ?></td>
+                <td><?php echo $customer->group_name; ?></td>
+                <td><?php echo $customer->getStatus(); ?></td>
+                <td><?php echo $customer->created_date; ?></td>
+                <td><?php echo $customer->updated_date; ?></td>
                 <td>
-                    <a href="index.php?c=customer&a=edit&id=<?php echo $row->customer_id; ?>">Edit</a> |
-                    <a href="index.php?c=customer&a=delete&id=<?php echo $row->customer_id; ?>">Delete</a>
+                    <a href="<?php echo $this->getUrl('edit', 'customer', ['id' => $customer->customer_id]); ?>">Edit</a> |
+                    <a href="<?php echo $this->getUrl('delete', 'customer', ['id' => $customer->customer_id]); ?>">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>

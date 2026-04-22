@@ -1,7 +1,7 @@
 <h2>
     Tab List
 </h2>
-<a href="index.php?c=tab&a=edit">Add Tab</a>
+<a href="<?php echo $this->getUrl('edit', 'tab'); ?>">Add Tab</a>
 <br><br>
 <table border="1" width="100%">
     <tr>
@@ -11,15 +11,15 @@
         <th>Status</th>
         <th>Actions</th>
     </tr>
-    <?php foreach ($this->getDataValue('tabs') as $tab): ?>
+    <?php foreach ($this->getData('tabs') as $tab): ?>
         <tr>
             <td><?php echo $tab->tab_id; ?></td>
             <td><?php echo $tab->name; ?></td>
             <td><?php echo $tab->module_name; ?></td>
-            <td><?php echo $tab->status; ?></td>
+            <td><?php echo $tab->getStatus(); ?></td>
             <td>
-                <a href="index.php?c=tab&a=edit&id=<?php echo $tab->tab_id; ?>">Edit</a> |
-                <a href="index.php?c=tab&a=delete&id=<?php echo $tab->tab_id; ?>">Delete</a>
+                <a href="<?php echo $this->getUrl('edit', 'tab', ['id' => $tab->tab_id]); ?>">Edit</a> |
+                <a href="<?php echo $this->getUrl('delete', 'tab', ['id' => $tab->tab_id]); ?>">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>

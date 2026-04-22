@@ -4,6 +4,7 @@ class Controller_Core_Base
 {
 
     protected $request = null;
+    protected $message = null;
 
     public function getLayout()
     {
@@ -27,25 +28,15 @@ class Controller_Core_Base
         if ($this->request) {
             return $this->request;
         }
-        $request = Mage::getModel('request');
+        $request = Mage::getModel('core/request');
         $this->request = $request;
         return $this->request;
     }
 
-    public function redirect($a = null, $c = null, $params = [])
+    public function redirect($a = null, $c = null, $params = [], $reset = false)
     {
-        if (!$a) {
-            $a = $this->getRequest()->get("a");
-        }
-        if (!$c) {
-            $c = $this->getRequest()->get("c");
-        }
-        if (empty($params)) {
-            $query = http_build_query(['c' => $c, 'a' => $a]);
-        } else {
-            $query = http_build_query(array_merge(['c' => $c, 'a' => $a], $params));
-        }
-        header("Location: index.php?" . $query);
+        $url = Mage::getModel('core/url')->getUrl($a, $c, $params, $reset);
+        header("Location: " . $url);
         exit();
     }
 
@@ -58,6 +49,14 @@ class Controller_Core_Base
 
     }
 
+    public function getMessage()
+    {
+        if ($this->message) {
+            return $this->message;
+        }
+        $this->message = Mage::getModel('core/message');
+        return $this->message;
+    }
     public function preDispatch()
     {
         $session = new Model_Core_Session();

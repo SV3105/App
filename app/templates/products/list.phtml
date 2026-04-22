@@ -1,5 +1,5 @@
 <h2>Product List</h2>
-<a href="index.php?c=product&a=edit">Add New Product</a>
+<a href="<?php echo $this->getUrl('edit', 'product', [], true); ?>">Add New Product</a>
 <br><br>
 
 <table border="1" width="100%">
@@ -26,14 +26,14 @@
                 <td><?php echo $product->price; ?></td>
                 <td><?php echo $product->description; ?></td>
                 <td><?php echo $product->getStatus(); ?></td>
-                <td><a
-                        href="index.php?c=product_media&a=edit&id=<?php echo $product->product_id; ?>"><?php echo $product->media_count; ?></a>
+                <td>
+                    <a href="<?php echo $this->getUrl('edit', 'product_media', ['id' => $product->product_id]); ?>"><?php echo $product->media_count; ?></a>
                 </td>
                 <td><?php echo $product->created_date; ?></td>
                 <td><?php echo $product->updated_date; ?></td>
                 <td>
-                    <a href="index.php?c=product&a=edit&id=<?php echo $product->product_id; ?>">Edit</a> |
-                    <a href="index.php?c=product&a=delete&id=<?php echo $product->product_id; ?>">Delete</a>
+                    <a href="<?php echo $this->getUrl('edit', 'product', ['id' => $product->product_id], true); ?>">Edit</a> |
+                    <a href="<?php echo $this->getUrl('delete', 'product', ['id' => $product->product_id], true); ?>">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,0 +1,26 @@
+<?php 
+$tabs = $this->getTabs();
+$request = $this->getRequest();
+$activeTab = $this->getActiveTab();
+?>
+
+<table border="1" width="100%">
+    <tr>
+        <?php foreach ($tabs as $tab): ?>
+            <?php
+            $isActive = ($activeTab && $activeTab->tab_id == $tab->tab_id);
+            $url = $this->getUrl(null, null, ['tab' => $tab->tab_id]);
+            ?>
+            <td style="<?php echo $isActive ? 'background-color: yellow;' : ''; ?>">
+                <a href="<?php echo $url; ?>" style="text-decoration: none; color: black; font-weight: <?php echo $isActive ? 'bold' : 'normal'; ?>;">
+                    <?php echo $tab->name; ?>
+                </a>
+            </td>
+        <?php endforeach; ?>
+    </tr>
+</table>
+<br>
+
+<div class="tab-content">
+    <?php echo $this->getTabContent(); ?>
+</div>

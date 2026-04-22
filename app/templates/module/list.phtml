@@ -1,7 +1,7 @@
 
 
 <h2>Module List</h2>
-<a href="index.php?c=module&a=edit">Add New Module</a>
+<a href="<?php echo $this->getUrl('edit', 'module'); ?>">Add New Module</a>
 <br><br>
 
 <table border="1" width="100%">
@@ -12,15 +12,15 @@
         <th>Status</th>
         <th>Actions</th>
     </tr>
-    <?php if ($this->getDataValue('modules')): ?>
-        <?php foreach ($this->getDataValue('modules') as $row): ?>
+    <?php if ($this->getData('modules')): ?>
+        <?php foreach ($this->getData('modules') as $module): ?>
             <tr>
-                <td><?php echo $row->name; ?></td>
-                <td><?php echo $row->code; ?></td>
-                <td><?php echo $row->status; ?></td>
+                <td><?php echo $module->name; ?></td>
+                <td><?php echo $module->code; ?></td>
+                <td><?php echo $module->getStatus(); ?></td>
                 <td>
-                    <a href="index.php?c=module&a=edit&id=<?php echo $row->module_id; ?>">Edit</a> |
-                    <a href="index.php?c=module&a=delete&id=<?php echo $row->module_id; ?>">Delete</a>
+                    <a href="<?php echo $this->getUrl('edit', 'module', ['id' => $module->module_id]); ?>">Edit</a> |
+                    <a href="<?php echo $this->getUrl('delete', 'module', ['id' => $module->module_id]); ?>">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>
